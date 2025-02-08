@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Propose Day</title>
+    <title>Propose Day Surprise</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -45,7 +45,7 @@
             color: black;
         }
         .no {
-            transition: transform 0.5s linear;
+            transition: transform 0.3s linear;
         }
         @keyframes pulse {
             0% { transform: scale(1); opacity: 1; }
@@ -65,7 +65,10 @@
             margin-top: 20px;
             display: none;
         }
-        @media (max-width: 768px) {
+        #gifContainer img {
+            width: 20%;
+        }
+        @media (max-width: 400px) {
             h1 { font-size: 2rem; }
             .question { font-size: 1.5rem; }
             .btn { font-size: 1rem; padding: 8px 16px; }
@@ -73,10 +76,10 @@
     </style>
 </head>
 <body>
-    <h1>Happy Propose Day, <span id="name">Chahat</span>! ❤️</h1>
+    <h1>Happy Propose Day, <span id="name">Love</span>! ❤️</h1>
     <div class="heart">💖</div>
     
-    <div class="question">Will you be my Valentine?</div>
+    <div class="question">Will you marry me?</div>
     <div class="buttons">
         <button class="btn yes" id="yesButton" onclick="showGif()">Yes</button>
         <button class="btn no" id="noButton" onclick="startMovingNoButton()">No</button>
@@ -103,12 +106,13 @@
             document.getElementById("yesButton").style.display = "none";
         }
 
-        // No Button Movement Starts Only After First Click
+        // No Button Movement Starts Immediately After First Click
         const noButton = document.getElementById("noButton");
         let moveInterval;
         function startMovingNoButton() {
             if (!moveInterval) {
-                moveInterval = setInterval(moveNoButtonSmoothly, 700);
+                moveNoButtonSmoothly(); // Move immediately
+                moveInterval = setInterval(moveNoButtonSmoothly, 800);
             }
         }
 
