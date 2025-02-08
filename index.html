@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propose Day</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
+            color: white;
+            padding: 50px;
+            overflow: hidden;
+        }
+        h1 {
+            font-size: 3rem;
+        }
+        #message {
+            font-size: 1.5rem;
+            margin-top: 20px;
+        }
+        .heart {
+            font-size: 5rem;
+            animation: pulse 1s infinite;
+        }
+        .question {
+            font-size: 1.8rem;
+            margin-top: 30px;
+        }
+        .buttons {
+            margin-top: 20px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .btn {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: black;
+        }
+        .no {
+            transition: transform 0.5s linear;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .floating-heart {
+            position: absolute;
+            font-size: 2rem;
+            animation: blink 1s infinite alternate;
+        }
+        #gifContainer {
+            margin-top: 20px;
+            display: none;
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .question { font-size: 1.5rem; }
+            .btn { font-size: 1rem; padding: 8px 16px; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Happy Propose Day, <span id="name">Chahat</span>! ❤️</h1>
+    <div class="heart">💖</div>
+    
+    <div class="question">Will you be my Valentine?</div>
+    <div class="buttons">
+        <button class="btn yes" id="yesButton" onclick="showGif()">Yes</button>
+        <button class="btn no" id="noButton" onclick="startMovingNoButton()">No</button>
+    </div>
+    
+    <div id="gifContainer">
+        <img src="https://i.pinimg.com/originals/af/1b/cb/af1bcbacdd8e3f346aa923edbd8b71b0.gif" alt="Teddy Hugging Saying Yayyy">
+    </div>
+
+    <script>
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+        
+        const name = getQueryParam('name');
+        if (name) {
+            document.getElementById('name').innerText = name;
+        }
+
+        function showGif() {
+            document.getElementById("gifContainer").style.display = "block";
+            document.getElementById("noButton").style.display = "none";
+            document.getElementById("yesButton").style.display = "none";
+        }
+
+        // No Button Movement Starts Only After First Click
+        const noButton = document.getElementById("noButton");
+        let moveInterval;
+        function startMovingNoButton() {
+            if (!moveInterval) {
+                moveInterval = setInterval(moveNoButtonSmoothly, 700);
+            }
+        }
+
+        function moveNoButtonSmoothly() {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            const rangeX = window.innerWidth * 0.375; // 75% range from center
+            const rangeY = window.innerHeight * 0.375;
+            
+            const x = centerX + (Math.random() * rangeX * 2 - rangeX);
+            const y = centerY + (Math.random() * rangeY * 2 - rangeY);
+            
+            noButton.style.transform = `translate(${x - centerX}px, ${y - centerY}px)`;
+        }
+
+        // Generate Blinking Hearts
+        function createBlinkingHeart() {
+            const heart = document.createElement("div");
+            heart.className = "floating-heart";
+            heart.innerText = "💖";
+            heart.style.top = `${Math.random() * 100}vh`;
+            heart.style.left = `${Math.random() * 100}vw`;
+            heart.style.animationDuration = `${Math.random() * 1.5 + 0.5}s`;
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 2000);
+        }
+
+        setInterval(createBlinkingHeart, 300);
+    </script>
+</body>
+</html>
